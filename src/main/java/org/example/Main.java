@@ -44,11 +44,17 @@ public class Main {
         String file = nasa.getUrl();
         try (FileOutputStream fos = new FileOutputStream("/Users/vi/Desktop/ABELL1060_LRGB_NASA.jpg")) {
             byte[] bytes = file.getBytes();
-            fos.write(bytes, 0, bytes.length);
-            fos.flush();
+            HttpEntity entity = response2.getEntity();
+
+            if (entity != null) {
+                FileOutputStream fosp = new FileOutputStream("/Users/vi/Desktop/ABELL1060_LRGB_NASA.jpg");
+                entity.writeTo(fosp);
+                fos.write(bytes, 0, bytes.length);
+                fos.flush();
+                fosp.close();
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 }
